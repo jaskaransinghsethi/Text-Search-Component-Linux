@@ -1,0 +1,14 @@
+all: Client.o 
+
+Client.o: Client.cpp FileMgr.so TextSearchComp.so
+	g++ -g -std=c++11 -Wall -Werror  Client.cpp  FileMgr.so TextSearchComp.so -ldl -o Client.o
+
+
+TextSearchComp.so: TextSearchComp.cpp FileMgr.cpp FileSystem.cpp 
+	g++ -shared -fPIC TextSearchComp.cpp FileMgr.cpp FileSystem.cpp -o TextSearchComp.so 
+
+FileMgr.so: FileMgr.cpp	FileSystem.cpp 
+	g++ -shared -fPIC FileMgr.cpp FileSystem.cpp -o FileMgr.so
+
+FileSystem.o: FileSystem.cpp
+	g++ -g -TEST_FILESYSTEM FileSystem.cpp -o FileSystem.o
